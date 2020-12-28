@@ -10,7 +10,7 @@ export default function Display(): JSX.Element {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <AnimatedNumber
             className="volume-display"
-            value={Math.ceil(volume / 5) * 5}
+            value={volume}
             duration={200}
             formatValue={(value: number) => value.toFixed(0)}
           />
