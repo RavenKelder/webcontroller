@@ -17,6 +17,7 @@ function App() {
       .then((res) => res.json())
       .then((vol: VolumeStatus) => {
         setVolume(vol.Volume);
+        setMuted(vol.Muted);
       });
     
       fetch("/computer")
