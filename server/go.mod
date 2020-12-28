@@ -1,4 +1,4 @@
-module ravenkelder/audiocontrol
+module ravenkelder/webcontroller
 
 go 1.15
 

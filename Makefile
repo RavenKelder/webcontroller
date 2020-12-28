@@ -1,6 +1,6 @@
 compileserver:
 	@echo "Compiling Go server..."
-	cd server && go build -o ../bin/audiocontrol
+	cd server && go build -o ../bin/webcontroller
 
 compileapp:
 	@echo "Compiling React App..."

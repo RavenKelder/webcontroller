@@ -8,7 +8,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"ravenkelder/audiocontrol/internal/control"
+	"ravenkelder/webcontroller/internal/control"
 	"strconv"
 
 	"github.com/itchyny/volume-go"
