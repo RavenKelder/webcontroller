@@ -1,0 +1,17 @@
+{
+  "name": "webcontroller",
+  "displayName": "Remote Control",
+  "expo": {
+    "name": "webcontrollerapp",
+    "slug": "webcontrollerapp",
+    "icon": "remote-control.png",
+    "version": "1.0.0",
+    "android": {
+      "package": "ravenkelder.remotecontrol",
+      "versionCode": 1
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
