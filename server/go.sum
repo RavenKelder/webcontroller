@@ -4,3 +4,5 @@ github.com/itchyny/volume-go v0.2.0 h1:Y9PbJ+FbdoiAA8shCjZ/oMwsVynxE0hjDQiDrVdN7
 github.com/itchyny/volume-go v0.2.0/go.mod h1:HkEkJcoQvzaGwNjlvYbB7ybZbd29Z9pGVxvb3j172uk=
 github.com/moutend/go-wca v0.1.1 h1:XTuNIhTOxRrdOQnCufXdTAp2+Nh3vtE7upKksC31sS4=
 github.com/moutend/go-wca v0.1.1/go.mod h1:tOejf27SfSMa+8LuMhPE0bdaFNnoxlmMGvo/VwAWi7Q=
+github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
+github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=

@@ -12,6 +12,7 @@ import (
 	"strconv"
 
 	"github.com/itchyny/volume-go"
+	"github.com/rs/cors"
 )
 
 func returnJSON(w http.ResponseWriter, data interface{}) {
@@ -24,7 +25,9 @@ func main() {
 
 	var addr string = ":8080"
 
-	http.HandleFunc("/computer", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/computer", func(w http.ResponseWriter, r *http.Request) {
 		hostname, err := os.Hostname()
 		if err != nil {
 			fmt.Fprintf(w, "OS_ERROR")
@@ -36,7 +39,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		status, err := control.Status()
 		if err != nil {
 			fmt.Fprintf(w, "VOLUME_ERROR")
@@ -45,7 +48,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/increase", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/increase", func(w http.ResponseWriter, r *http.Request) {
 		status, err := control.Increase(5)
 		if err != nil {
 			fmt.Fprintf(w, "VOLUME_ERROR")
@@ -54,7 +57,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/decrease", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/decrease", func(w http.ResponseWriter, r *http.Request) {
 		status, err := control.Decrease(5)
 		if err != nil {
 			fmt.Fprintf(w, "VOLUME_ERROR")
@@ -63,7 +66,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/mute", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/mute", func(w http.ResponseWriter, r *http.Request) {
 		err := volume.Mute()
 		status, errStatus := control.Status()
 		if err != nil || errStatus != nil {
@@ -73,7 +76,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/unmute", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/unmute", func(w http.ResponseWriter, r *http.Request) {
 		err := volume.Unmute()
 		status, errStatus := control.Status()
 		if err != nil || errStatus != nil {
@@ -83,7 +86,7 @@ func main() {
 		}
 	})
 
-	http.HandleFunc("/set", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/set", func(w http.ResponseWriter, r *http.Request) {
 		values, ok := r.URL.Query()["value"]
 
 		if !ok || len(values[0]) < 1 {
@@ -117,11 +120,20 @@ func main() {
 	exPath := filepath.Dir(ex)
 
 	fs := http.FileServer(http.Dir(path.Join(exPath, "build")))
-	http.Handle("/", fs)
+	mux.Handle("/", fs)
 
 	log.Println("Listening on port address " + addr)
 
-	err := http.ListenAndServe(addr, nil)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{
+			"http://localhost:19006",
+			"http://192.168.1.*:19006",
+		},
+	})
+
+	handler := c.Handler(mux)
+
+	err := http.ListenAndServe(addr, handler)
 	if err != nil {
 		log.Fatal(err)
 	}
